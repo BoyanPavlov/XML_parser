@@ -155,6 +155,7 @@ void Processor::parseXML(const string &text, int &index)
         if (text[index] == '<')
         {
             // recursion
+            parseXML(text, index);
         }
         else
         {
