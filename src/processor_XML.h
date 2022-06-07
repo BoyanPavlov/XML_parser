@@ -30,7 +30,9 @@ public:
     bool isOpeningOrClosingTag(const string &text, int &from);
 
     void processOpeningTag(const string &text, int &index);
-    void processClosingTag(const string &text, int &index);
+    void processClosingTag(const string &text, int &index, const string &nameOfLastOpeningElement);
+
+    void parseXML(const string &text, int &index);
 
     Processor(/* args */);
 

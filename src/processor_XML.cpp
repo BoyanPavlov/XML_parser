@@ -134,6 +134,49 @@ void Processor::processOpeningTag(const string &text, int &index)
     }
 }
 
-void Processor::processClosingTag(const string &text, int &index)
+void Processor::processClosingTag(const string &text, int &index, const string &nameOfLastOpeningElement)
 {
+    // spaces skipped
+    // we are sure we are in closing tag
+
+    // check the name of closing tag if matches with the last opening
+}
+
+void Processor::parseXML(const string &text, int &index)
+{
+    skipSpaces(text, index);
+    if (isOpeningOrClosingTag(text, index))
+    {
+        // opening tag
+        processOpeningTag(text, index);
+
+        // extract text or get into recursion
+        skipSpaces(text, index);
+        if (text[index] == '<')
+        {
+            // recursion
+        }
+        else
+        {
+            // not needed for this function here, but used
+            bool equalSignFound = false;
+            string textOfElement = extractText(text, index, equalSignFound);
+            if (equalSignFound == true)
+            {
+                throw std::invalid_argument("Invalid text inputed");
+            }
+            // element.setText(textOfElement);
+            skipSpaces(text, index);
+            // look for closing tag
+            // closing tag found - ok
+            // closing tag not found - exception
+        }
+    }
+    else
+    {
+        // is closing
+        // check name of the key
+        // valid name
+        // invalid name -> exception
+    }
 }
