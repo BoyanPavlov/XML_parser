@@ -10,4 +10,5 @@ using std::vector;
 
 TEST_CASE("validation")
 {
+    string Example = "<people> </people>";
 }

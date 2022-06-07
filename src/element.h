@@ -18,22 +18,27 @@ private:
     Element *parent;
     /// children
     vector<Element> nested_elements;
-    string text;
 
+    string text;
     string attribute;
     string nameOfElement;
 
-    // TODO - might be in other class
-    void checkForClosingTag();
-    void extractAttribute();
-
 public:
-    Element(/* args */);
+    Element();
 
+    const vector<Element> &getElements() const;
     const string &getNameOfElement() const;
+    const string &getAttribute() const;
+    const string &getTexts() const;
+
+    void addElement(const Element &element);
+    void setNameOfElement(const string &name);
+    void setAttribute(const string &attribute);
+    void setTexts(const string &text);
 };
 
-Element::Element(/* args */)
+Element::Element()
+    : parent(nullptr)
 {
 }
 
