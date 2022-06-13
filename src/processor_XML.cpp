@@ -218,8 +218,7 @@ void Processor::parseXML(const string &text, int &index, Element *parent)
         {
             throw std::invalid_argument("Invalid structure of XML\n");
         }
-        parent->getElements().push_back(temp);
-        elements.push_back(*parent);
+        parent->getParent()->getElements().push_back(*parent);
     }
     else
     {

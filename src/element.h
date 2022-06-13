@@ -28,11 +28,12 @@ private:
 public:
     Element();
 
-    const vector<Element> &getElements() const;
+    vector<Element> &getElements() const;
     const string &getNameOfElement() const;
     const string &getAttribute() const;
     const string &getTexts() const;
     int getLevel() const;
+    const Element *getParent() const;
 
     void addElement(const Element &element);
     void setNameOfElement(const string &name);
