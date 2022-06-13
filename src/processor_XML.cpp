@@ -172,42 +172,21 @@ void Processor::processClosingTag(const string &text, int &index, const Element 
 // you need some kind of traversing the string ...
 void Processor::parseXML(const string &text, int &index, Element *parent)
 {
-    Element temp;
+    Element temp(parent);
 
     skipSpaces(text, index);
+
     int opt = isOpeningTagIsClosingOr_(text, index);
+
     if (opt == opening_tag)
     {
-        // opening tag
         processOpeningTag(text, index, temp);
-
-        // extract text or get into recursion
-        skipSpaces(text, index);
-        if (text[index] == '<')
-        {
-            // recursion
-            parseXML(text, index, &temp);
-        }
-        else
-        {
-            string textOfElement = extractText(text, index);
-            temp.setText(textOfElement);
-
-            // look for closing tag
-            // closing tag found - ok
-            // closing tag not found - exception
-
-            skipSpaces(text, index);
-            processClosingTag(text, index, temp);
-            parent->addElement(temp);
-            return;
-        }
+        parseXML(text, index, &temp);
     }
     else if (opt == closing_tag)
     {
-        string name;
+        string name = extractNameOfElement(text, index);
 
-        name = extractNameOfElement(text, index);
         skipSpaces(text, index);
         if (!(text[index] == '>'))
         {
@@ -218,11 +197,67 @@ void Processor::parseXML(const string &text, int &index, Element *parent)
         {
             throw std::invalid_argument("Invalid structure of XML\n");
         }
-        parent->getParent()->getElements().push_back(*parent);
+        parent->getParent()->addElement(*parent);
+        parseXML(text, index, parent->getParent());
     }
     else
     {
-        // am i wrong?!?
-        throw std::invalid_argument("Invalid structure of XML\n");
+        string textOfElement = extractText(text, index);
+        (*parent).setText(textOfElement);
+
+        // look for closing tag
+        // closing tag found - ok
+        // closing tag not found - exception
+
+        skipSpaces(text, index);
+        processClosingTag(text, index, *parent);
+        parent->getParent()->addElement(*parent);
+        parseXML(text, index, parent->getParent());
+    }
+}
+
+void Processor::parseChildrenForTag(const string &text, int &index, Element *current)
+{
+    Element child(current);
+
+    skipSpaces(text, index);
+
+    int opt = isOpeningTagIsClosingOr_(text, index);
+
+    if (opt == opening_tag)
+    {
+        processOpeningTag(text, index, child);
+        parseChildrenForTag(text, index, &child);
+    }
+    else if (opt == closing_tag)
+    {
+        string name = extractNameOfElement(text, index);
+
+        skipSpaces(text, index);
+        if (!(text[index] == '>'))
+        {
+            throw std::invalid_argument("couldn't find \'<\' \n");
+        }
+
+        if (name != current->getNameOfElement())
+        {
+            throw std::invalid_argument("Invalid structure of XML\n");
+        }
+        current->getParent()->addElement(*current);
+        parseChildrenForTag(text, index, current->getParent());
+    }
+    else
+    {
+        string textOfElement = extractText(text, index);
+        (*current).setText(textOfElement);
+
+        // look for closing tag
+        // closing tag found - ok
+        // closing tag not found - exception
+
+        skipSpaces(text, index);
+        processClosingTag(text, index, *current);
+        current->getParent()->addElement(*current);
+        parseChildrenForTag(text, index, current->getParent());
     }
 }

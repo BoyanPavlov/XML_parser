@@ -45,6 +45,8 @@ public:
 
     void parseXML(const string &text, int &index, Element *parent);
 
+    void parseChildrenForTag(const string &text, int &index, Element *current);
+
     Processor(/* args */);
 
     void parseXML();
