@@ -23,6 +23,8 @@ private:
     string attribute;
     string nameOfElement;
 
+    int level;
+
 public:
     Element();
 
@@ -30,11 +32,13 @@ public:
     const string &getNameOfElement() const;
     const string &getAttribute() const;
     const string &getTexts() const;
+    int getLevel() const;
 
     void addElement(const Element &element);
     void setNameOfElement(const string &name);
     void setAttribute(const string &attribute);
-    void setTexts(const string &text);
+    void setText(const string &text);
+    void setLevel(int level);
 };
 
 Element::Element()
