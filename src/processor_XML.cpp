@@ -172,15 +172,18 @@ void Processor::processClosingTag(const string &text, int &index, const Element 
     string name;
     if (text[index] == '<')
     {
+        index++;
         skipSpaces(text, index);
-        if (text[index] == '\\')
+        if (text[index] == '/')
         {
+            index++;
+            skipSpaces(text, index);
             name = extractNameOfElement(text, index);
         }
         skipSpaces(text, index);
         if (!(text[index] == '>'))
         {
-            throw std::invalid_argument("couldn't find \'<\' \n");
+            throw std::invalid_argument("couldn't find \"</\" \n");
         }
     }
     else
@@ -192,6 +195,7 @@ void Processor::processClosingTag(const string &text, int &index, const Element 
     {
         throw std::invalid_argument("Invalid structure of XML\n");
     }
+    // std::cout << "succesfull\n";
 }
 
 // you need some kind of traversing the string ...

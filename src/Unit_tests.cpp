@@ -238,4 +238,101 @@ TEST_CASE("function:processOpeningTag")
     }
 }
 
+TEST_CASE("function:processClosingTag")
+{
+    Processor pr;
+    SECTION("closingTag1")
+    {
+        string givenTag = "</motherfucker>";
 
+        Element elem;
+        string expectedName = "motherfucker";
+        elem.setNameOfElement(expectedName);
+
+        int from = 0;
+
+        string error;
+        try
+        {
+            pr.processClosingTag(givenTag, from, elem);
+        }
+        catch (const std::invalid_argument &e)
+        {
+            error = e.what();
+        }
+    }
+
+    SECTION("closingTag2")
+    {
+        string givenTag = "</  hello  >";
+
+        Element elem;
+        string expectedName = "hey";
+        elem.setNameOfElement(expectedName);
+
+        int from = 0;
+
+        string error;
+        try
+        {
+            pr.processClosingTag(givenTag, from, elem);
+        }
+        catch (const std::invalid_argument &e)
+        {
+            error = e.what();
+        }
+        string expectedError = "Invalid structure of XML\n";
+
+        REQUIRE(error == expectedError);
+    }
+
+    SECTION("closingTag3")
+    {
+        string givenTag = "< / hello  >";
+
+        Element elem;
+        string expectedName = "hey";
+        elem.setNameOfElement(expectedName);
+
+        int from = 0;
+
+        string error;
+        try
+        {
+            pr.processClosingTag(givenTag, from, elem);
+        }
+        catch (const std::invalid_argument &e)
+        {
+            error = e.what();
+        }
+        string expectedError = "Invalid structure of XML\n";
+
+        REQUIRE(error == expectedError);
+    }
+
+    SECTION("closingTag4")
+    {
+        string givenTag = "<  hello  >";
+
+        Element elem;
+        string expectedName = "hello";
+        elem.setNameOfElement(expectedName);
+
+        int from = 0;
+
+        string error;
+        try
+        {
+            pr.processClosingTag(givenTag, from, elem);
+        }
+        catch (const std::invalid_argument &e)
+        {
+            error = e.what();
+        }
+        string expectedError = "couldn't find \"</\" \n";
+
+        REQUIRE(error == expectedError);
+    }
+
+    
+}
