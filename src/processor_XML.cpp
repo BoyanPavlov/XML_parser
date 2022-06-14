@@ -70,7 +70,7 @@ int Processor::isOpeningTagIsClosingOr_(const string &text, int &index)
 
 void Processor::skipSpaces(const string &text, int &from)
 {
-    while (text[from] == ' ')
+    while (text[from] == ' ' || text[from] == '\n' || text[from] == '\t')
     {
         from++;
     }
@@ -101,10 +101,24 @@ string Processor::extractText(const string &text, int &index)
 {
     // spaces skipped
     string buffer;
-    while (text[index] != '>')
+    while (text[index] != '>' && text[index] != '<')
     {
         buffer += text[index];
         index++;
+    }
+    int tempIndex = 0;
+
+    while (tempIndex != buffer.size())
+    {
+        if (buffer[tempIndex] == ' ' && (!isLetter(buffer[tempIndex + 1])))
+        {
+            buffer.erase(buffer.begin() + tempIndex + 1);
+        }
+        else if (buffer.back() == ' ')
+        {
+            buffer.pop_back();
+        }
+        tempIndex++;
     }
     return buffer;
 }
@@ -164,12 +178,14 @@ void Processor::processOpeningTag(const string &text, int &index, Element &eleme
     {
         throw std::invalid_argument("Invalid opening tag");
     }
+    index++;
 }
 
 void Processor::processClosingTag(const string &text, int &index, const Element &element)
 {
     // spaces skipped
     string name;
+    char curChar = text[index];
     if (text[index] == '<')
     {
         index++;
@@ -185,6 +201,7 @@ void Processor::processClosingTag(const string &text, int &index, const Element 
         {
             throw std::invalid_argument("couldn't find \"</\" \n");
         }
+        index++;
     }
     else
     {
@@ -198,75 +215,36 @@ void Processor::processClosingTag(const string &text, int &index, const Element 
     // std::cout << "succesfull\n";
 }
 
-// you need some kind of traversing the string ...
-// void Processor::parseXML(const string &text, int &index, Element *parent)
-// {
-//     Element temp(parent);
-//
-//     skipSpaces(text, index);
-//
-//     int opt = isOpeningTagIsClosingOr_(text, index);
-//
-//     if (opt == opening_tag)
-//     {
-//         processOpeningTag(text, index, temp);
-//         parseXML(text, index, &temp);
-//     }
-//     else if (opt == closing_tag)
-//     {
-//         string name = extractNameOfElement(text, index);
-//
-//         skipSpaces(text, index);
-//         if (!(text[index] == '>'))
-//         {
-//             throw std::invalid_argument("couldn't find \'<\' \n");
-//         }
-//
-//         if (name != parent->getNameOfElement())
-//         {
-//             throw std::invalid_argument("Invalid structure of XML\n");
-//         }
-//         parent->getParent()->addElement(*parent);
-//         parseXML(text, index, parent->getParent());
-//     }
-//     else
-//     {
-//         string textOfElement = extractText(text, index);
-//         (*parent).setText(textOfElement);
-//
-//         // look for closing tag
-//         // closing tag found - ok
-//         // closing tag not found - exception
-//
-//         skipSpaces(text, index);
-//         processClosingTag(text, index, *parent);
-//         parent->getParent()->addElement(*parent);
-//         parseXML(text, index, parent->getParent());
-//     }
-// }
-
 void Processor::parseChildrenForTag(const string &text, int &index, Element *current)
 {
+    if (text.size() <= index + 1)
+    {
+        return;
+    }
+
     Element child(current);
 
     skipSpaces(text, index);
 
+    int tempIndex = index;
     int opt = isOpeningTagIsClosingOr_(text, index);
 
     if (opt == opening_tag)
     {
+        index = tempIndex;
         processOpeningTag(text, index, child);
         parseChildrenForTag(text, index, &child);
     }
     else if (opt == closing_tag)
     {
-        processClosingTag(text, index, current);
+        index = tempIndex;
+        processClosingTag(text, index, *current);
         current->getParent()->addElement(*current);
         parseChildrenForTag(text, index, current->getParent());
     }
     else
     {
-        //processing text
+        // processing text
         string textOfElement = extractText(text, index);
         current->setText(textOfElement);
 

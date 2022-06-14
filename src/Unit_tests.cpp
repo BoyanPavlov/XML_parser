@@ -340,7 +340,7 @@ TEST_CASE("function:processClosingTag")
 TEST_CASE("function:parseChildrenForTag")
 {
     Processor pr;
-    SECTION("closingTag1")
+    SECTION("XML1")
     {
         string givenText = "<person>  </person>";
 
@@ -365,11 +365,153 @@ TEST_CASE("function:parseChildrenForTag")
         }
 
         string givenName = root.getElements()[0].getNameOfElement();
-        string givenАttribute = root.getElements()[0].getAttribute();
+        string givenAttr = root.getElements()[0].getAttribute();
         int givenLevel = root.getElements()[0].getLevel();
 
         REQUIRE(expectedName == givenName);
-        REQUIRE(expectedAttribute == givenАttribute);
+        REQUIRE(expectedAttribute == givenAttr);
+        REQUIRE(expectedLevel == givenLevel);
+    }
+
+    SECTION("XML2")
+    {
+        string givenText = "<person id=\'1\'>  </person>";
+
+        Element root;
+        root.setNameOfElement("root");
+
+        string expectedName = "person";
+        string expectedAttribute = "id=\'1\'";
+        int expectedLevel = 1;
+
+        int from = 0;
+
+        string error;
+        try
+        {
+            pr.parseChildrenForTag(givenText, from, &root);
+        }
+        catch (const std::invalid_argument &e)
+        {
+            error = e.what();
+            std::cout << error << '\n';
+        }
+
+        string givenName = root.getElements()[0].getNameOfElement();
+        string givenAttr = root.getElements()[0].getAttribute();
+        int givenLevel = root.getElements()[0].getLevel();
+
+        REQUIRE(expectedName == givenName);
+        REQUIRE(expectedAttribute == givenAttr);
+        REQUIRE(expectedLevel == givenLevel);
+    }
+
+    SECTION("XML3")
+    {
+        string givenText = "<person id=\'1\'> Kapaci </person>";
+
+        Element root;
+        root.setNameOfElement("root");
+
+        string expectedName = "person";
+        string expectedAttribute = "id=\'1\'";
+        string expectedText = "Kapaci";
+        int expectedLevel = 1;
+
+        int from = 0;
+
+        string error;
+        try
+        {
+            pr.parseChildrenForTag(givenText, from, &root);
+        }
+        catch (const std::invalid_argument &e)
+        {
+            error = e.what();
+            std::cout << error << '\n';
+        }
+
+        string givenName = root.getElements()[0].getNameOfElement();
+        string givenTxt = root.getElements()[0].getTexts();
+        string givenAttr = root.getElements()[0].getAttribute();
+        int givenLevel = root.getElements()[0].getLevel();
+
+        REQUIRE(expectedName == givenName);
+        REQUIRE(expectedAttribute == givenAttr);
+        REQUIRE(expectedText == givenTxt);
         REQUIRE(expectedLevel == givenLevel);
     }
 }
+//========nested elements=================
+TEST_CASE("function:parseChildrenForTag_complexTests")
+{
+    SECTION("XML1")
+    {
+        Processor pr;
+        string givenText = "<person id=\"0\">  \n      < name > John Smith< / name>   \n     <address>USA< / address>    \n    < / person>";
+
+        Element root;
+        root.setNameOfElement("root");
+
+        // first child
+        string expectedName = "person";
+        string expectedAttribute = "id=\"0\"";
+        string expectedText = "";
+        int expectedLevel = 1;
+        // first child - first child
+        string expectedName1 = "name";
+        string expectedAttribute1 = "";
+        string expectedText1 = "John Smith";
+        int expectedLevel1 = 2;
+        // first child - second child
+        string expectedName2 = "address";
+        string expectedAttribute2 = "";
+        string expectedText2 = "USA";
+        int expectedLevel2 = 2;
+
+        int from = 0;
+
+        string error;
+        try
+        {
+            pr.parseChildrenForTag(givenText, from, &root);
+        }
+        catch (const std::invalid_argument &e)
+        {
+            error = e.what();
+            std::cout << error << '\n';
+        }
+
+        string givenName = root.getElements()[0].getNameOfElement();
+        string givenTxt = root.getElements()[0].getTexts();
+        string givenAttr = root.getElements()[0].getAttribute();
+        int givenLevel = root.getElements()[0].getLevel();
+
+        string givenName1 = root.getElements()[0].getElements()[0].getNameOfElement();
+        string givenTxt1 = root.getElements()[0].getElements()[0].getTexts();
+        string givenAttr1 = root.getElements()[0].getElements()[0].getAttribute();
+        int givenLevel1 = root.getElements()[0].getElements()[0].getLevel();
+
+        string givenName2 = root.getElements()[0].getElements()[1].getNameOfElement();
+        string givenTxt2 = root.getElements()[0].getElements()[1].getTexts();
+        string givenAttr2 = root.getElements()[0].getElements()[1].getAttribute();
+        int givenLevel2 = root.getElements()[0].getElements()[1].getLevel();
+
+        REQUIRE(expectedName == givenName);
+        REQUIRE(expectedAttribute == givenAttr);
+        REQUIRE(expectedText == givenTxt);
+        REQUIRE(expectedLevel == givenLevel);
+
+        REQUIRE(expectedName1 == givenName1);
+        REQUIRE(expectedAttribute1 == givenAttr1);
+        REQUIRE(expectedText1 == givenTxt1);
+        REQUIRE(expectedLevel1 == givenLevel1);
+
+        REQUIRE(expectedName2 == givenName2);
+        REQUIRE(expectedAttribute2 == givenAttr2);
+        REQUIRE(expectedText2 == givenTxt2);
+        REQUIRE(expectedLevel2 == givenLevel2);
+    }
+}
+
+//====
