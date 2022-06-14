@@ -333,6 +333,43 @@ TEST_CASE("function:processClosingTag")
 
         REQUIRE(error == expectedError);
     }
+}
 
-    
+//===========================================
+//=============simplest obj==================
+TEST_CASE("function:parseChildrenForTag")
+{
+    Processor pr;
+    SECTION("closingTag1")
+    {
+        string givenText = "<person>  </person>";
+
+        Element root;
+        root.setNameOfElement("root");
+
+        string expectedName = "person";
+        string expectedAttribute = "";
+        int expectedLevel = 1;
+
+        int from = 0;
+
+        string error;
+        try
+        {
+            pr.parseChildrenForTag(givenText, from, &root);
+        }
+        catch (const std::invalid_argument &e)
+        {
+            error = e.what();
+            std::cout << error << '\n';
+        }
+
+        string givenName = root.getElements()[0].getNameOfElement();
+        string givenАttribute = root.getElements()[0].getAttribute();
+        int givenLevel = root.getElements()[0].getLevel();
+
+        REQUIRE(expectedName == givenName);
+        REQUIRE(expectedAttribute == givenАttribute);
+        REQUIRE(expectedLevel == givenLevel);
+    }
 }

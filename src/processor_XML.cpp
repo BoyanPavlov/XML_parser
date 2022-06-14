@@ -260,23 +260,13 @@ void Processor::parseChildrenForTag(const string &text, int &index, Element *cur
     }
     else if (opt == closing_tag)
     {
-        string name = extractNameOfElement(text, index);
-
-        skipSpaces(text, index);
-        if (!(text[index] == '>'))
-        {
-            throw std::invalid_argument("couldn't find \'<\' \n");
-        }
-
-        if (name != current->getNameOfElement())
-        {
-            throw std::invalid_argument("Invalid structure of XML\n");
-        }
+        processClosingTag(text, index, current);
         current->getParent()->addElement(*current);
         parseChildrenForTag(text, index, current->getParent());
     }
     else
     {
+        //processing text
         string textOfElement = extractText(text, index);
         current->setText(textOfElement);
 
