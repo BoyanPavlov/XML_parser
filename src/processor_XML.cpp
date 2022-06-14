@@ -58,7 +58,7 @@ int Processor::isOpeningTagIsClosingOr_(const string &text, int &index)
         index++;
         skipSpaces(text, index);
         // determne is closing tag, else it's opening
-        if (text[index] == '\\')
+        if (text[index] == '/')
         {
             return closing_tag;
         }
@@ -109,6 +109,29 @@ string Processor::extractText(const string &text, int &index)
     return buffer;
 }
 
+string Processor::extractAttribute(const string &text, int &index)
+{
+    // spaces skipped
+    string buffer = extractText(text, index);
+
+    int tempIndex = 0;
+    char c1;
+    char c2;
+    while (tempIndex != buffer.size())
+    {
+        if ((buffer[tempIndex] == '\'' || buffer[tempIndex] == '\"') && buffer[tempIndex + 1] == ' ')
+        {
+            c1 = buffer[tempIndex];
+            c2 = buffer[tempIndex + 1];
+            buffer.erase(buffer.begin() + tempIndex + 1);
+            continue;
+        }
+        tempIndex++;
+    }
+
+    return buffer;
+}
+
 void Processor::processOpeningTag(const string &text, int &index, Element &element)
 {
     skipSpaces(text, index);
@@ -121,16 +144,18 @@ void Processor::processOpeningTag(const string &text, int &index, Element &eleme
     // skip spaces;
     skipSpaces(text, index);
 
+    // extracts only letters and puts them into buffer - spaces must be skipped
     string nameOfElement = extractNameOfElement(text, index);
     element.setNameOfElement(nameOfElement);
     skipSpaces(text, index);
 
-    string text = extractText(text, index);
+    // string extractedText = extractText(text, index);
+    string extractedText = extractAttribute(text, index);
 
     // extracting Attributes here
-    if (text.size() > 0)
+    if (extractedText.size() > 0)
     {
-        element.setAttribute(text);
+        element.setAttribute(extractedText);
     }
 
     skipSpaces(text, index);
@@ -170,51 +195,51 @@ void Processor::processClosingTag(const string &text, int &index, const Element 
 }
 
 // you need some kind of traversing the string ...
-void Processor::parseXML(const string &text, int &index, Element *parent)
-{
-    Element temp(parent);
-
-    skipSpaces(text, index);
-
-    int opt = isOpeningTagIsClosingOr_(text, index);
-
-    if (opt == opening_tag)
-    {
-        processOpeningTag(text, index, temp);
-        parseXML(text, index, &temp);
-    }
-    else if (opt == closing_tag)
-    {
-        string name = extractNameOfElement(text, index);
-
-        skipSpaces(text, index);
-        if (!(text[index] == '>'))
-        {
-            throw std::invalid_argument("couldn't find \'<\' \n");
-        }
-
-        if (name != parent->getNameOfElement())
-        {
-            throw std::invalid_argument("Invalid structure of XML\n");
-        }
-        parent->getParent()->addElement(*parent);
-        parseXML(text, index, parent->getParent());
-    }
-    else
-    {
-        string textOfElement = extractText(text, index);
-        (*parent).setText(textOfElement);
-
-        // look for closing tag
-        // closing tag found - ok
-        // closing tag not found - exception
-
-        skipSpaces(text, index);
-        processClosingTag(text, index, *parent);
-        parent->getParent()->addElement(*parent);
-        parseXML(text, index, parent->getParent());
-    }
-}
+// void Processor::parseXML(const string &text, int &index, Element *parent)
+// {
+//     Element temp(parent);
+//
+//     skipSpaces(text, index);
+//
+//     int opt = isOpeningTagIsClosingOr_(text, index);
+//
+//     if (opt == opening_tag)
+//     {
+//         processOpeningTag(text, index, temp);
+//         parseXML(text, index, &temp);
+//     }
+//     else if (opt == closing_tag)
+//     {
+//         string name = extractNameOfElement(text, index);
+//
+//         skipSpaces(text, index);
+//         if (!(text[index] == '>'))
+//         {
+//             throw std::invalid_argument("couldn't find \'<\' \n");
+//         }
+//
+//         if (name != parent->getNameOfElement())
+//         {
+//             throw std::invalid_argument("Invalid structure of XML\n");
+//         }
+//         parent->getParent()->addElement(*parent);
+//         parseXML(text, index, parent->getParent());
+//     }
+//     else
+//     {
+//         string textOfElement = extractText(text, index);
+//         (*parent).setText(textOfElement);
+//
+//         // look for closing tag
+//         // closing tag found - ok
+//         // closing tag not found - exception
+//
+//         skipSpaces(text, index);
+//         processClosingTag(text, index, *parent);
+//         parent->getParent()->addElement(*parent);
+//         parseXML(text, index, parent->getParent());
+//     }
+// }
 
 void Processor::parseChildrenForTag(const string &text, int &index, Element *current)
 {
@@ -249,7 +274,7 @@ void Processor::parseChildrenForTag(const string &text, int &index, Element *cur
     else
     {
         string textOfElement = extractText(text, index);
-        (*current).setText(textOfElement);
+        current->setText(textOfElement);
 
         // look for closing tag
         // closing tag found - ok
@@ -260,4 +285,20 @@ void Processor::parseChildrenForTag(const string &text, int &index, Element *cur
         current->getParent()->addElement(*current);
         parseChildrenForTag(text, index, current->getParent());
     }
+}
+
+void Processor::wraper()
+{
+    string text;
+    // readFile(text);
+    processOpeningTag(text, index, root);
+    while (index != text.size())
+    {
+        /* code */
+    }
+}
+
+Processor::Processor()
+    : index(0)
+{
 }

@@ -20,11 +20,12 @@ enum Tags
 class Processor
 {
 private:
-    vector<Element> elements;
+    Element root;
     int index;
 
-    void checkForClosingTag();
-    void extractAttribute();
+public:
+    /// default constructor
+    Processor();
 
     /// function which returns index of first char different from space
     void skipSpaces(const string &text, int &from);
@@ -32,11 +33,13 @@ private:
     /// function which checks if a character is letter
     bool isLetter(char);
 
-public:
     /// function which returns string - name of the element
     string extractNameOfElement(const string &text, int &index);
     /// function which returns string - text in the opening tag
     string extractText(const string &text, int &index);
+    /// function which returns string - attribute in the opening tag
+    string extractAttribute(const string &text, int &index);
+
     /// returns 0 for opening, 1 for closing
     int isOpeningTagIsClosingOr_(const string &text, int &from);
 
@@ -45,11 +48,8 @@ public:
 
     void parseXML(const string &text, int &index, Element *parent);
 
+    void wraper();
     void parseChildrenForTag(const string &text, int &index, Element *current);
-
-    Processor(/* args */);
-
-    void parseXML();
 };
 
 #endif // _PROCESSOR_

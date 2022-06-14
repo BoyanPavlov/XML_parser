@@ -26,9 +26,10 @@ private:
     int level;
 
 public:
+    Element();
     Element(Element *parent);
 
-    vector<Element> &getElements() const;
+    vector<Element> &getElements();
     const string &getNameOfElement() const;
     const string &getAttribute() const;
     const string &getTexts() const;
@@ -41,10 +42,5 @@ public:
     void setText(const string &text);
     void setLevel(int level);
 };
-
-Element::Element(Element *parent)
-{
-    this->parent = parent;
-}
 
 #endif // _ELEMENT_
