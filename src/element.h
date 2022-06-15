@@ -41,6 +41,8 @@ public:
     void setAttribute(const string &attribute);
     void setText(const string &text);
     void setLevel(int level);
+
+    friend std::ostream &operator<<(std::ostream &out, const Element &);
 };
 
 #endif // _ELEMENT_

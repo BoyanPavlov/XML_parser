@@ -758,5 +758,6 @@ TEST_CASE("final test")
         REQUIRE(givenTxt2_2 == expectedText2_2);
         REQUIRE(givenAttr2_2 == expectedAttribute2_2);
         REQUIRE(givenLevel2_2 == expectedLevel2_2);
+        // std::cout << pr.getRoot();
     }
 }
