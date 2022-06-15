@@ -262,13 +262,9 @@ void Processor::parseChildrenForTag(const string &text, int &index, Element *cur
 
 void Processor::wraper()
 {
+    // text is extracted from file succesfully and ready for parsing;
     string text;
-    // readFile(text);
     processOpeningTag(text, index, root);
-    while (index != text.size())
-    {
-        /* code */
-    }
 }
 
 Processor::Processor()
