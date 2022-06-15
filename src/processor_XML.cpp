@@ -112,7 +112,8 @@ string Processor::extractText(const string &text, int &index)
     {
         if (buffer[tempIndex] == ' ' && (!isLetter(buffer[tempIndex + 1])))
         {
-            buffer.erase(buffer.begin() + tempIndex + 1);
+            // buffer.erase(buffer.begin() + tempIndex + 1);
+            buffer.erase(buffer.begin() + tempIndex);
         }
         else if (buffer.back() == ' ')
         {
