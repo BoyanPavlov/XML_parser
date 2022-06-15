@@ -20,7 +20,8 @@ enum Tags
 class Processor
 {
 private:
-    Element root;
+    Element* root;
+    string text;
     int index;
 
 public:
@@ -46,10 +47,14 @@ public:
     void processOpeningTag(const string &text, int &index, Element &element);
     void processClosingTag(const string &text, int &index, const Element &element);
 
-    void parseXML(const string &text, int &index, Element *parent);
-
-    void wraper();
+    void parseXML();
     void parseChildrenForTag(const string &text, int &index, Element *current);
+
+    void setText(const string &givenText);
+
+    Element &getRoot();
+    const string &getText();
+    const int &getIndex();
 };
 
 #endif // _PROCESSOR_

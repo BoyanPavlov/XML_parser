@@ -627,5 +627,136 @@ TEST_CASE("function:parseChildrenForTag_complexTests")
         REQUIRE(givenLevel2_2 == expectedLevel2_2);
     }
 }
-
 //====
+
+TEST_CASE("final test")
+{
+    SECTION("The test")
+    {
+        Processor pr;
+
+        string givenText = "<people>  <person id=\"0\">\n < name > John Smith</ name>\n <address> USA</ address>\n</ person>\n<person id = \"1\">\n<name> Ivan Petrov</ name>\n <address> Bulgaria</ address>\n</ person> </people>";
+
+        // root
+        string expectedNameRoot = "people";
+        string expectedAttributeRoot = "";
+        string expectedTextRoot = "";
+        int expectedLevelRoot = 0;
+
+        // first child
+        string expectedName0_1 = "person";
+        string expectedAttribute0_1 = "id=\"0\"";
+        string expectedText0_1 = "";
+        int expectedLevel0_1 = 1;
+        // first child - first child
+        string expectedName1_1 = "name";
+        string expectedAttribute1_1 = "";
+        string expectedText1_1 = "John Smith";
+        int expectedLevel1_1 = 2;
+        // first child - second child
+        string expectedName2_1 = "address";
+        string expectedAttribute2_1 = "";
+        string expectedText2_1 = "USA";
+        int expectedLevel2_1 = 2;
+
+        // second child
+        string expectedName0_2 = "person";
+        string expectedAttribute0_2 = "id=\"1\"";
+        string expectedText0_2 = "";
+        int expectedLevel0_2 = 1;
+        // second child - first child
+        string expectedName1_2 = "name";
+        string expectedAttribute1_2 = "";
+        string expectedText1_2 = "Ivan Petrov";
+        int expectedLevel1_2 = 2;
+        // second child - second child
+        string expectedName2_2 = "address";
+        string expectedAttribute2_2 = "";
+        string expectedText2_2 = "Bulgaria";
+        int expectedLevel2_2 = 2;
+
+        int from = 0;
+
+        string error;
+        try
+        {
+            pr.setText(givenText);
+            pr.parseXML();
+        }
+        catch (const std::invalid_argument &e)
+        {
+            error = e.what();
+            std::cout << error << '\n';
+        }
+
+        string rootName = pr.getRoot().getNameOfElement();
+        string rootText = pr.getRoot().getTexts();
+        string rootAttr = pr.getRoot().getAttribute();
+        int rootLevel = pr.getRoot().getLevel();
+
+        string givenName0_1 = pr.getRoot().getElements()[0].getNameOfElement();
+        string givenTxt0_1 = pr.getRoot().getElements()[0].getTexts();
+        string givenAttr0_1 = pr.getRoot().getElements()[0].getAttribute();
+        int givenLevel0_1 = pr.getRoot().getElements()[0].getLevel();
+
+        string givenName1_1 = pr.getRoot().getElements()[0].getElements()[0].getNameOfElement();
+        string givenTxt1_1 = pr.getRoot().getElements()[0].getElements()[0].getTexts();
+        string givenAttr1_1 = pr.getRoot().getElements()[0].getElements()[0].getAttribute();
+        int givenLevel1_1 = pr.getRoot().getElements()[0].getElements()[0].getLevel();
+
+        string givenName2_1 = pr.getRoot().getElements()[0].getElements()[1].getNameOfElement();
+        string givenTxt2_1 = pr.getRoot().getElements()[0].getElements()[1].getTexts();
+        string givenAttr2_1 = pr.getRoot().getElements()[0].getElements()[1].getAttribute();
+        int givenLevel2_1 = pr.getRoot().getElements()[0].getElements()[1].getLevel();
+
+        string givenName0_2 = pr.getRoot().getElements()[1].getNameOfElement();
+        string givenTxt0_2 = pr.getRoot().getElements()[1].getTexts();
+        string givenAttr0_2 = pr.getRoot().getElements()[1].getAttribute();
+        int givenLevel0_2 = pr.getRoot().getElements()[1].getLevel();
+
+        string givenName1_2 = pr.getRoot().getElements()[1].getElements()[0].getNameOfElement();
+        string givenTxt1_2 = pr.getRoot().getElements()[1].getElements()[0].getTexts();
+        string givenAttr1_2 = pr.getRoot().getElements()[1].getElements()[0].getAttribute();
+        int givenLevel1_2 = pr.getRoot().getElements()[1].getElements()[0].getLevel();
+
+        string givenName2_2 = pr.getRoot().getElements()[1].getElements()[1].getNameOfElement();
+        string givenTxt2_2 = pr.getRoot().getElements()[1].getElements()[1].getTexts();
+        string givenAttr2_2 = pr.getRoot().getElements()[1].getElements()[1].getAttribute();
+        int givenLevel2_2 = pr.getRoot().getElements()[1].getElements()[1].getLevel();
+
+        REQUIRE(rootName == expectedNameRoot);
+        REQUIRE(rootText == expectedTextRoot);
+        REQUIRE(rootAttr == expectedAttributeRoot);
+        REQUIRE(rootLevel == expectedLevelRoot);
+
+        REQUIRE(givenName0_1 == expectedName0_1);
+        REQUIRE(givenTxt0_1 == expectedText0_1);
+        REQUIRE(givenAttr0_1 == expectedAttribute0_1);
+        REQUIRE(givenLevel0_1 == expectedLevel0_1);
+
+        REQUIRE(givenName1_1 == expectedName1_1);
+        REQUIRE(givenTxt1_1 == expectedText1_1);
+        REQUIRE(givenAttr1_1 == expectedAttribute1_1);
+        REQUIRE(givenLevel1_1 == expectedLevel1_1);
+
+        REQUIRE(givenName2_1 == expectedName2_1);
+        REQUIRE(givenTxt2_1 == expectedText2_1);
+        REQUIRE(givenAttr2_1 == expectedAttribute2_1);
+        REQUIRE(givenLevel2_1 == expectedLevel2_1);
+
+        REQUIRE(givenName0_2 == expectedName0_2);
+        REQUIRE(givenTxt0_2 == expectedText0_2);
+        REQUIRE(givenAttr0_2 == expectedAttribute0_2);
+        REQUIRE(givenLevel0_2 == expectedLevel0_2);
+
+        REQUIRE(givenName1_2 == expectedName1_2);
+        REQUIRE(givenTxt1_2 == expectedText1_2);
+        REQUIRE(givenAttr1_2 == expectedAttribute1_2);
+        REQUIRE(givenLevel1_2 == expectedLevel1_2);
+
+        REQUIRE(givenName2_2 == expectedName2_2);
+        REQUIRE(givenTxt2_2 == expectedText2_2);
+        REQUIRE(givenAttr2_2 == expectedAttribute2_2);
+        REQUIRE(givenLevel2_2 == expectedLevel2_2);
+    }
+}

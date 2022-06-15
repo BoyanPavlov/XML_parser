@@ -260,14 +260,42 @@ void Processor::parseChildrenForTag(const string &text, int &index, Element *cur
     }
 }
 
-void Processor::wraper()
+void Processor::parseXML()
 {
     // text is extracted from file succesfully and ready for parsing;
-    string text;
-    processOpeningTag(text, index, root);
+    static Element tempRoot;
+    tempRoot.setLevel(-1);
+    
+    parseChildrenForTag(text, index, &tempRoot);
+    if (tempRoot.getElements().size() == 1)
+    {
+        root = &tempRoot.getElements()[0];
+    }
+    else
+    {
+        std::cout << "Mustn't enter here, error in parseXML function";
+    }
 }
 
 Processor::Processor()
     : index(0)
 {
+}
+
+void Processor::setText(const string &givenText)
+{
+    text = givenText;
+}
+
+Element &Processor::getRoot()
+{
+    return *root;
+}
+const string &Processor::getText()
+{
+    return text;
+}
+const int &Processor::getIndex()
+{
+    return index;
 }
