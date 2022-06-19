@@ -265,7 +265,7 @@ void Processor::parseXML()
     // text is extracted from file succesfully and ready for parsing;
     static Element tempRoot;
     tempRoot.setLevel(-1);
-    
+
     parseChildrenForTag(text, index, &tempRoot);
     if (tempRoot.getElements().size() == 1)
     {
@@ -298,4 +298,35 @@ const string &Processor::getText()
 const int &Processor::getIndex()
 {
     return index;
+}
+
+string Processor::getKeyOfAttribute(const string &givenAttribute, Element &elem)
+{
+    string attribute = elem.getAttribute();
+    string attributeKey;
+    int i = 0;
+
+    while (attribute[i] != '=' && ((i + 1) != attribute.size()))
+    {
+        attributeKey += attribute[i];
+        i++;
+    }
+    return attributeKey;
+}
+
+string Processor::getValueOfKey(const string &givenAttribute, Element &elem)
+{
+    string attribute = elem.getAttribute();
+    string attributeVal;
+    int i = 0;
+    while (attribute[i] != '=')
+    {
+        i++;
+    }
+    while (i != attribute.size())
+    {
+        attributeVal += attribute[i];
+        i++;
+    }
+    return attributeVal;
 }

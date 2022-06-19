@@ -2,7 +2,9 @@
 #include <fstream>
 #include <vector>
 #include <string>
+
 #include "processor_XML.h"
+#include "element.h"
 
 using std::cout;
 using std::endl;
@@ -27,10 +29,11 @@ enum Commands_enum
     // needed commands
     e_PRINT,
     e_SELECT,
+    e_SET,
     e_CHILDREN,
     e_CHILD,
     e_TEXT,
-    e_DELETE,
+    e_DELETE_ATTRIBUTE,
     e_NEWCHILD,
     e_XPATH,
     e_UNKNOWN
@@ -46,10 +49,11 @@ const vector<string> listOfCommands{// basic commands
                                     // needed commands
                                     "PRINT",
                                     "SELECT",
+                                    "SET",
                                     "CHILDREN",
                                     "CHILD",
                                     "TEXT",
-                                    "DELETE",
+                                    "DELETE_ATTRIBUTE",
                                     "NEWCHILD",
                                     "XPATH",
                                     "UNKNOWN"};
@@ -61,6 +65,10 @@ class Commands
 private:
     Commands() = default;
 
+    Processor instance;
+    vector<Element *> extractedElements;
+    string path;
+
     // function toUpper for the inputted commands
     void toUpper(string &given_command);
 
@@ -70,11 +78,8 @@ private:
     // function which get the index of the inputted command from the local list
     int findCommandIndex(string &given_command);
 
-    /// helper function used to check if a path to given file is valid
-    bool checkIfPathIsValid(string path);
-
-    Processor instance;
-    string path;
+    // /// recursive helper function for select; - not using anymore
+    // void selectRec(const string &id, const string &key, Element &element);
 
 public:
     static Commands &getInstance()
@@ -82,12 +87,15 @@ public:
         static Commands ref;
         return ref;
     }
+    /// helper function used to check if a path to given file is valid
+    static bool checkIfPathIsValid(string path);
 
     Commands &operator=(const Commands &e) = delete;
 
     Commands(const Commands &e) = delete;
 
-    /// basic functions
+    // basic functions
+
     void open(const string &path);
 
     /// closing the file
@@ -109,9 +117,13 @@ public:
 
     /// prints the read info from the XML file and prints the output in formated version
     void print();
+
     /// prints a value of attribute by given ID of element and key of attribute
     ///Извежда стойност на атрибут по даден идентификатор на елемента и ключ на атрибута
-    void select(const string &id, const string &key);
+    void select1(const string &id, const string &key);
+
+    // recursive version
+    // void select(const string &id, const string &key);
 
     /// sets value of attribute
     void set(const string &id, const string &key, const string &value);
@@ -129,10 +141,16 @@ public:
     void deleteAttribute(const string &id, const string &givenKey);
 
     /// adds a new child to Element, which has only ID, nothing else
-    void newchild(const string &IDOfnewChild);
+    void newchild(const string &id);
 
     ///операции за изпълнение на прости XPath 2.0 заявки към даден елемент, която връща списък от XML елементи
+    /// returns a list of simple XPath 2.0 operations for given elemnts(menu)
+    /// in the given list(menu) - you have some options and commands for the chosen element
     void xpath(const string &id, const string &XPath);
+
+    void extractElements(Element &elem);
+
+    void setProcessor(const Processor &givenPr);
 };
 
 #endif // _COMMANDS_

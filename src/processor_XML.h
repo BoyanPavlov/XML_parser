@@ -20,7 +20,7 @@ enum Tags
 class Processor
 {
 private:
-    Element* root;
+    Element *root;
     string text;
     int index;
 
@@ -55,6 +55,9 @@ public:
     Element &getRoot();
     const string &getText();
     const int &getIndex();
+
+    string getKeyOfAttribute(const string &givenAttribute, Element &elem);
+    string getValueOfKey(const string &givenAttribute, Element &elem);
 };
 
 #endif // _PROCESSOR_

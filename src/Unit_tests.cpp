@@ -5,6 +5,7 @@
 
 #include "element.h"
 #include "processor_XML.h"
+#include "commands.h"
 
 using std::string;
 using std::vector;
@@ -634,7 +635,6 @@ TEST_CASE("final test")
     SECTION("The test")
     {
         Processor pr;
-
         string givenText = "<people>  <person id=\"0\">\n < name > John Smith</ name>\n <address> USA</ address>\n</ person>\n<person id = \"1\">\n<name> Ivan Petrov</ name>\n <address> Bulgaria</ address>\n</ person> </people>";
 
         // root
@@ -758,6 +758,26 @@ TEST_CASE("final test")
         REQUIRE(givenTxt2_2 == expectedText2_2);
         REQUIRE(givenAttr2_2 == expectedAttribute2_2);
         REQUIRE(givenLevel2_2 == expectedLevel2_2);
-        // std::cout << pr.getRoot();
+        //========commands testing=================
+        //=====print
+        std::cout << pr.getRoot();
+        std::cout << '\n';
+
+        //========select
+        Commands &commandsInstance = Commands::getInstance();
+        commandsInstance.setProcessor(pr);
+        commandsInstance.extractElements(pr.getRoot());
+        string temp_id = "id";
+
+        // commandsInstance.select(expectedName0_1, temp_id);
+        std::cout << '\n';
+        commandsInstance.select1(expectedName0_1, temp_id);
+
+        //========set
+        commandsInstance.set(expectedName0_1, temp_id, "salam");
+        cout << "\n";
+        commandsInstance.select1(expectedName0_1, temp_id);
+
+        int stop = 0;
     }
 }
