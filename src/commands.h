@@ -39,6 +39,8 @@ enum Commands_enum
     e_UNKNOWN
 };
 
+
+
 const vector<string> listOfCommands{// basic commands
                                     "OPEN",
                                     "CLOSE",
@@ -81,6 +83,9 @@ private:
     // /// recursive helper function for select; - not using anymore
     // void selectRec(const string &id, const string &key, Element &element);
 
+    ///function for parsing the Xpath
+    void parseXPath(const string &XPath);
+
 public:
     static Commands &getInstance()
     {
@@ -108,7 +113,7 @@ public:
     void saveAs(const string &path);
 
     /// function help - prints the basic menu
-    void help();
+    // void help(); -- in interface
 
     /// exits the program
     void exit();
@@ -128,14 +133,14 @@ public:
     /// sets value of attribute
     void set(const string &id, const string &key, const string &value);
 
-    /// returns vector of all nested elements of the given element
-    const vector<Element> &children(const string &id);
+    /// prints all nested elements of the given element
+    void children(const string &id);
+    
+    /// prints the n'th child of the element
+    void child(const string &id, int index);
 
-    /// returns the n'th child of the element
-    const Element &child(const string &id, int index);
-
-    /// returns the text of the element
-    const string &text(const string &id);
+    /// prints the text of the element
+    void text(const string &id);
 
     /// deletes an attribute of element by given key
     void deleteAttribute(const string &id, const string &givenKey);
@@ -148,8 +153,10 @@ public:
     /// in the given list(menu) - you have some options and commands for the chosen element
     void xpath(const string &id, const string &XPath);
 
+    /// other functions
+    /// function used for extracting all of the elements and storing them in a vector
     void extractElements(Element &elem);
-
+    /// function for setting a processor
     void setProcessor(const Processor &givenPr);
 };
 

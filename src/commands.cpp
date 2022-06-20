@@ -1,4 +1,5 @@
 #include "commands.h"
+#include "processor_XML.h"
 #include "customExceptions.h"
 
 // utilities
@@ -20,13 +21,15 @@ void Commands::toUpper(string &given_command)
 
 string Commands::convertStreamToString(ifstream &in)
 {
-    string temp;
+    // string temp;
+    char c;
     string str;
     while (!in.eof())
     {
-        // TODO FIX!!!!!!!!!!!!!!!!
-        std::getline(in, temp);
-        str += temp;
+        in.get(c);
+        str += c;
+        // std::getline(in, temp);
+        // str += temp;
     }
     return str;
 }
@@ -135,15 +138,15 @@ void Commands::saveAs(const string &path)
     }
 }
 
-/// function help - prints the basic menu
-void Commands::help()
-{
-    cout << "The following commands are supported:\n";
-    for (int i = 0; i < listOfCommands.size() - 1; i++)
-    {
-        cout << i << ". " << listOfCommands[i] << endl;
-    }
-}
+// /// function help - prints the basic menu
+// void Commands::help()
+// {
+//     cout << "The following commands are supported:\n";
+//     for (int i = 0; i < listOfCommands.size() - 1; i++)
+//     {
+//         cout << i << ". " << listOfCommands[i] << endl;
+//     }
+// }
 
 /// exits the program
 void Commands::exit()
@@ -244,7 +247,7 @@ void Commands::set(const string &id, const string &key, const string &value)
 void Commands::deleteAttribute(const string &id, const string &givenKey)
 {
     cout << "First elements with this ID( " << id << " ) and key( " << givenKey
-         << " ) will lose it's attribute";
+         << " ) will lose it's attribute\n";
     for (int i = 0; i < extractedElements.size(); i++)
     {
         if (extractedElements[i]->getAttribute().size() > 0)
@@ -265,9 +268,130 @@ void Commands::deleteAttribute(const string &id, const string &givenKey)
 
 void Commands::newchild(const string &id)
 {
+    cout << "New element added to the root with ID( " << id << " )\n";
     Element newOne;
     newOne.setNameOfElement(id);
     newOne.setLevel(1);
     instance.getRoot().addElement(newOne);
     extractedElements.push_back(&newOne);
+}
+
+void Commands::children(const string &id)
+{
+    cout << "Elements with this ID( " << id << " ) - printing them and their children:\n";
+    for (int i = 0; i < extractedElements.size(); i++)
+    {
+        if (extractedElements[i]->getNameOfElement() == id)
+        {
+            cout << *extractedElements[i] << '\n';
+        }
+    }
+}
+
+void Commands::child(const string &id, int index)
+{
+    cout << "Elements with this ID( " << id << " ) and index( " << index << " ):\n";
+    for (int i = 0; i < extractedElements.size(); i++)
+    {
+        if (extractedElements[i]->getNameOfElement() == id)
+        {
+            int numberOfChildren = extractedElements[i]->getElements().size();
+            if (index >= numberOfChildren)
+            {
+                cout << "Invalid index\n";
+            }
+            else
+            {
+                cout << "Child's element with this ID: \n"
+                     << extractedElements[i]->getElements()[index] << '\n';
+            }
+        }
+    }
+}
+
+void Commands::text(const string &id)
+{
+    cout << "Elements with this ID( " << id << " ):\n";
+    for (int i = 0; i < extractedElements.size(); i++)
+    {
+        if (extractedElements[i]->getNameOfElement() == id)
+        {
+            cout << "Text of element with this ID( " << id << " ): "
+                 << extractedElements[i]->getTexts()
+                 << '\n';
+        }
+    }
+}
+
+void Commands::xpath(const string &id, const string &XPath)
+{
+    string error = "Please enter try again and enter valid id or valid xPath\n";
+    cout << "Elements with this ID( " << id << " ) and XPath ( " << XPath << " ):\n";
+    for (int i = 0; i < extractedElements.size(); i++)
+    {
+        if (extractedElements[i]->getNameOfElement() == id)
+        {
+        }
+    }
+}
+
+void parseXPath(const string &XPath)
+{
+    //"person/address"
+    //"person/address[0]"
+    //"person(@id)"
+    //"person(address='USA')/name"
+
+    string id;
+    string idOfChild;
+    string onebufferMore;
+
+    bool wordExtracted = false;
+    int i = 0;
+    // skip everything which is not a word
+    while (!Processor::isLetter(XPath[i]))
+    {
+        i++;
+    }
+    while (Processor::isLetter(XPath[i]))
+    {
+        id += XPath[i];
+        i++;
+    }
+    // skip everything which is not a word or special symbol
+    while (!Processor::isLetter(XPath[i]) && XPath[i] != '=' && XPath[i] != '@' && XPath[i] != '/')
+    {
+        i++;
+    }
+    char operation = XPath[i];
+
+    // skip everything which is not a word
+    while (!Processor::isLetter(XPath[i]))
+    {
+        i++;
+    }
+
+    while (Processor::isLetter(XPath[i]))
+    {
+        idOfChild += XPath[i];
+        i++;
+    }
+//TODO
+    //==========operations============
+    if (operation == '=')
+    {
+        // TODO
+    }
+    else if (operation == '@')
+    {
+        // TODO
+    }
+    else if (operation == '/')
+    {
+        // TODO
+    }
+    else
+    {
+        cout << "error in xPath parsing\n";
+    }
 }

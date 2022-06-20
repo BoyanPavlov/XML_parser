@@ -177,7 +177,12 @@ void Interface::start()
         if (choice == e_PRINT)
         {
             instance.print();
-            // printMenu();
+            cout << "\n";
+            choice = openChosen();
+        }
+        if (choice == e_HELP)
+        {
+            choice = openChosen();
         }
 
         if (choice == e_SELECT)
@@ -188,7 +193,8 @@ void Interface::start()
             cin >> id >> key;
             instance.select1(id, key);
 
-            // printMenu();
+            cout << "\n";
+            choice = openChosen();
         }
 
         if (choice == e_SET)
@@ -200,18 +206,42 @@ void Interface::start()
             cin >> id >> key >> value;
             instance.set(id, key, value);
             isFileSaved = false;
+
+            cout << "\n";
+            choice = openChosen();
         }
 
         if (choice == e_CHILDREN)
         {
-        }
+            string id;
+            cout << "Please enter name of Element(ID)\n";
+            cin >> id;
+            instance.children(id);
 
+            cout << "\n";
+            choice = openChosen();
+        }
         if (choice == e_CHILD)
         {
+            string id;
+            int index;
+            cout << "Please enter name of Element(ID) and child's index.\n Indexes are zero based";
+            cin >> id >> index;
+            instance.child(id, index);
+
+            cout << "\n";
+            choice = openChosen();
         }
 
         if (choice == e_TEXT)
         {
+            string id;
+            cout << "Please enter name of Element(ID)\n";
+            cin >> id;
+            instance.text(id);
+
+            cout << "\n";
+            choice = openChosen();
         }
 
         if (choice == e_DELETE_ATTRIBUTE)
@@ -222,6 +252,9 @@ void Interface::start()
             cout << "Please enter name of Element(ID) and its attibute name (key) \n";
             cin >> id >> key;
             instance.deleteAttribute(id, key);
+
+            cout << "\n";
+            choice = openChosen();
         }
 
         if (choice == e_NEWCHILD)
@@ -231,12 +264,27 @@ void Interface::start()
             cin >> id;
             instance.newchild(id);
             cout << "Element with id:" << id << "added succesfully\n";
+
+            cout << "\n";
+            choice = openChosen();
         }
 
         if (choice == e_XPATH)
         {
+            cout << "You have chosen XPath\n"
+                 << "My parser support given opperations:\n "
+                 << "1. operator \"/\": ID/ID_of_child - outputs all children elements with ID_of_child\n"
+                 << "2. operator \"[]\": ID/ID_of_child[n] - outputs the n'th child\n"
+                 << "3. operator \"@\": ID(@Attribute_key) - outputs all of the attibutes with this key\n"
+                 << "4. operator \"=\": ID(ID_of_child=\"childsText\") - outputs all elements which has givenText\n";
+            string id;
+            string xPath;
+            cout << "Please enter ID, then expression as xPath";
+            cin >> id >> xPath;
+            instance.xpath(id, xPath);
+            cout << '\n';
+            choice = openChosen();
         }
-
 
         if (choice == e_CLOSE)
         {
@@ -248,7 +296,8 @@ void Interface::start()
             instance.save();
             isFileSaved == true;
 
-            // printMenu();
+            cout << "\n";
+            choice = openChosen();
         }
 
         if (choice == e_SAVE_AS)
@@ -265,14 +314,17 @@ void Interface::start()
             instance.saveAs(path);
             isFileSaved = true;
 
-            // printMenu();
+            cout << "\n";
+            choice = openChosen();
         }
-
-        // EXIT
 
         if (choice == e_EXIT && opened)
         {
-
+            if (isFileSaved)
+            {
+                instance.close();
+                return;
+            }
             cout << "\nDo you want to save changes or save in new file\n";
             cout << "To save in new file enter: " << e_SAVE_AS << endl;
             cout << "To save: " << e_SAVE << endl;
@@ -282,11 +334,17 @@ void Interface::start()
             {
                 instance.save();
                 isFileSaved = true;
+
+                cout << "\n";
+                choice = openChosen();
             }
             else if (currentchoice == e_SAVE_AS)
             {
                 instance.saveAs(path);
                 isFileSaved = true;
+
+                cout << "\n";
+                choice = openChosen();
             }
             else
             {
@@ -295,10 +353,5 @@ void Interface::start()
             }
         }
 
-        if (wrongCommand)
-        {
-            cout << "Invalid command please try again";
-        }
-
-    } while (choice != e_CLOSE);
+    } while (choice != e_EXIT);
 }

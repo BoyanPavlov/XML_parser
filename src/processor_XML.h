@@ -32,7 +32,7 @@ public:
     void skipSpaces(const string &text, int &from);
 
     /// function which checks if a character is letter
-    bool isLetter(char);
+    static bool isLetter(char);
 
     /// function which returns string - name of the element
     string extractNameOfElement(const string &text, int &index);
