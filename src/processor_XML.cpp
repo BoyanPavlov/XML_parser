@@ -278,7 +278,7 @@ void Processor::parseXML()
 }
 
 Processor::Processor()
-    : index(0)
+    : index(0), root(nullptr)
 {
 }
 
