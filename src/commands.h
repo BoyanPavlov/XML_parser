@@ -39,8 +39,6 @@ enum Commands_enum
     e_UNKNOWN
 };
 
-
-
 const vector<string> listOfCommands{// basic commands
                                     "OPEN",
                                     "CLOSE",
@@ -68,7 +66,6 @@ private:
     Commands() = default;
 
     Processor instance;
-    vector<Element *> extractedElements;
     string path;
 
     // function toUpper for the inputted commands
@@ -83,10 +80,13 @@ private:
     // /// recursive helper function for select; - not using anymore
     // void selectRec(const string &id, const string &key, Element &element);
 
-    ///function for parsing the Xpath
+    /// function for parsing the Xpath
     void parseXPath(const string &XPath);
 
 public:
+    vector<Element *> extractedElements;
+
+    /// function for getting an instance
     static Commands &getInstance()
     {
         static Commands ref;
@@ -94,14 +94,14 @@ public:
     }
     /// helper function used to check if a path to given file is valid
     static bool checkIfPathIsValid(string path);
-
+    /// deleted operator=
     Commands &operator=(const Commands &e) = delete;
-
+    /// deleted copy constr
     Commands(const Commands &e) = delete;
 
     // basic functions
-
-    void open(const string &path);
+    /// returns reference to the extracted root of XML elem
+    Element &open(const string &path);
 
     /// closing the file
     void close();
@@ -114,10 +114,7 @@ public:
 
     /// function help - prints the basic menu
     // void help(); -- in interface
-
-    /// exits the program
-    void exit();
-
+    
     // XML functions
 
     /// prints the read info from the XML file and prints the output in formated version
@@ -135,7 +132,7 @@ public:
 
     /// prints all nested elements of the given element
     void children(const string &id);
-    
+
     /// prints the n'th child of the element
     void child(const string &id, int index);
 

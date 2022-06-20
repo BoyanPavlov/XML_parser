@@ -1,0 +1,60 @@
+\hypertarget{class_element}{}\doxysection{Element Class Reference}
+\label{class_element}\index{Element@{Element}}
+
+
+{\ttfamily \#include $<$element.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_element_afe7da5d83e05e9603cc42016d7c8d972}\label{class_element_afe7da5d83e05e9603cc42016d7c8d972}} 
+{\bfseries Element} (\mbox{\hyperlink{class_element}{Element}} $\ast$parent)
+\item 
+\mbox{\Hypertarget{class_element_acb44ab7ce6056666413db3658fa4e2db}\label{class_element_acb44ab7ce6056666413db3658fa4e2db}} 
+vector$<$ \mbox{\hyperlink{class_element}{Element}} $>$ \& {\bfseries get\+Elements} ()
+\item 
+\mbox{\Hypertarget{class_element_a4d72e79ff0e3cd6211db7a0ef020139e}\label{class_element_a4d72e79ff0e3cd6211db7a0ef020139e}} 
+const string \& {\bfseries get\+Name\+Of\+Element} () const
+\item 
+\mbox{\Hypertarget{class_element_a839a4784df4a2f6ff558bb825fd91630}\label{class_element_a839a4784df4a2f6ff558bb825fd91630}} 
+const string \& {\bfseries get\+Attribute} () const
+\item 
+\mbox{\Hypertarget{class_element_adc436d5cd734c72adfb2aca1a77c7751}\label{class_element_adc436d5cd734c72adfb2aca1a77c7751}} 
+const string \& {\bfseries get\+Texts} () const
+\item 
+\mbox{\Hypertarget{class_element_a89ad0df74337fd25a52538d0073f1bea}\label{class_element_a89ad0df74337fd25a52538d0073f1bea}} 
+int {\bfseries get\+Level} () const
+\item 
+\mbox{\Hypertarget{class_element_ae31c5e0f4cbfce3db2681209b9c06421}\label{class_element_ae31c5e0f4cbfce3db2681209b9c06421}} 
+\mbox{\hyperlink{class_element}{Element}} $\ast$ {\bfseries get\+Parent} () const
+\item 
+\mbox{\Hypertarget{class_element_a603642e27004cb7b3ed4c1a2533a6d89}\label{class_element_a603642e27004cb7b3ed4c1a2533a6d89}} 
+void {\bfseries add\+Element} (const \mbox{\hyperlink{class_element}{Element}} \&element)
+\item 
+\mbox{\Hypertarget{class_element_ac647151d8c9f92098e2b7e94add8b12f}\label{class_element_ac647151d8c9f92098e2b7e94add8b12f}} 
+void {\bfseries set\+Name\+Of\+Element} (const string \&name)
+\item 
+\mbox{\Hypertarget{class_element_a2adb4f0ea76cc8846093de3a004ecf41}\label{class_element_a2adb4f0ea76cc8846093de3a004ecf41}} 
+void {\bfseries set\+Attribute} (const string \&attribute)
+\item 
+\mbox{\Hypertarget{class_element_a108a732e191512c652a63ffbede3fee2}\label{class_element_a108a732e191512c652a63ffbede3fee2}} 
+void {\bfseries set\+Text} (const string \&text)
+\item 
+\mbox{\Hypertarget{class_element_ab702b95404246e026687434f5ee47ee5}\label{class_element_ab702b95404246e026687434f5ee47ee5}} 
+void {\bfseries set\+Level} (int level)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_element_a5fbf1a884051341fb9c8166ba3ec3a9c}\label{class_element_a5fbf1a884051341fb9c8166ba3ec3a9c}} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&out, const \mbox{\hyperlink{class_element}{Element}} \&)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+XML documents are formed as element trees. An XML tree starts at a root element and branches from the root to child elements. All elements can have sub elements (child elements) 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+element.\+h\item 
+element.\+cpp\end{DoxyCompactItemize}

@@ -17,8 +17,6 @@ class Interface
 private:
     // unnecessary variable for better view;
     const string line = "=============================\n";
-    /// function used for constructing an obj of type Interface
-    Interface &instance = Interface::getInstance();
     /// function used after entering the programs - prints menu and so on (command help)
     int openChosen();
     /// function for intro in the program
@@ -26,7 +24,7 @@ private:
     /// function used when you leave the program
     int exitChosen(bool saved);
 
-    Interface() = default;
+    Interface()= default;
 
 public:
     static Interface &getInstance()

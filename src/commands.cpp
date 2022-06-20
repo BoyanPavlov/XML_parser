@@ -65,7 +65,7 @@ void Commands::setProcessor(const Processor &givenPr)
 }
 // basic commands
 
-void Commands::open(const string &path)
+Element &Commands::open(const string &path)
 {
     if (checkIfPathIsValid(path))
     {
@@ -96,6 +96,7 @@ void Commands::open(const string &path)
     {
         throw InvalidPath();
     }
+    return instance.getRoot();
 }
 
 void Commands::close()
@@ -118,44 +119,15 @@ void Commands::save()
 
 void Commands::saveAs(const string &path)
 {
-    bool isPathValid = checkIfPathIsValid(path);
-    if (!isPathValid)
+    std::ofstream out(path, std::ios::out | std::ios::trunc);
+    out << instance.getRoot();
+    if (!out.is_open())
     {
-        // mustn't enter here
-        throw InvalidPath();
+        cout << "Problem with saving the XML\n";
+        return;
     }
-    else
-    {
-        std::ofstream out(path, std::ios::out | std::ios::trunc);
-        out << instance.getRoot();
-        if (!out.is_open())
-        {
-            cout << "Problem with saving the XML\n";
-            return;
-        }
-        cout << "XML saved successfully in " << path << endl;
-        out.close();
-    }
-}
-
-// /// function help - prints the basic menu
-// void Commands::help()
-// {
-//     cout << "The following commands are supported:\n";
-//     for (int i = 0; i < listOfCommands.size() - 1; i++)
-//     {
-//         cout << i << ". " << listOfCommands[i] << endl;
-//     }
-// }
-
-/// exits the program
-void Commands::exit()
-{
-    // check if file is saved
-    // options :
-    // save
-    // save as
-    // close
+    cout << "XML saved successfully in " << path << endl;
+    out.close();
 }
 
 // XML commands
@@ -205,7 +177,8 @@ void Commands::extractElements(Element &elem)
 void Commands::select1(const string &id, const string &key)
 {
     cout << "Elements with this ID( " << id << " ) and key( " << key << " )found:\n";
-    for (int i = 0; i < extractedElements.size(); i++)
+    int size = extractedElements.size();
+    for (int i = 0; i < size; i++)
     {
         if (extractedElements[i]->getAttribute().size() > 0)
         {
@@ -376,7 +349,7 @@ void parseXPath(const string &XPath)
         idOfChild += XPath[i];
         i++;
     }
-//TODO
+    // TODO
     //==========operations============
     if (operation == '=')
     {

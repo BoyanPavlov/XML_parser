@@ -1,0 +1,77 @@
+\hypertarget{class_processor}{}\doxysection{Processor Class Reference}
+\label{class_processor}\index{Processor@{Processor}}
+
+
+class which manage validation, extraction and processing of the elements and so on  
+
+
+
+
+{\ttfamily \#include $<$processor\+\_\+\+XML.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_processor_a50c89dbf76a073f4fb491628258cf292}\label{class_processor_a50c89dbf76a073f4fb491628258cf292}} 
+\mbox{\hyperlink{class_processor_a50c89dbf76a073f4fb491628258cf292}{Processor}} ()
+\begin{DoxyCompactList}\small\item\em default constructor \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_processor_a26b6f628f14d9a45c5ff36ba94d55013}\label{class_processor_a26b6f628f14d9a45c5ff36ba94d55013}} 
+void \mbox{\hyperlink{class_processor_a26b6f628f14d9a45c5ff36ba94d55013}{skip\+Spaces}} (const string \&text, int \&from)
+\begin{DoxyCompactList}\small\item\em function which returns index of first char different from space \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_processor_a85c7007701ceaf9f351d50ae4e96674d}\label{class_processor_a85c7007701ceaf9f351d50ae4e96674d}} 
+string \mbox{\hyperlink{class_processor_a85c7007701ceaf9f351d50ae4e96674d}{extract\+Name\+Of\+Element}} (const string \&text, int \&index)
+\begin{DoxyCompactList}\small\item\em function which returns string -\/ name of the element \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_processor_ab2e3c6a6006d226119d527d48a0dc2cb}\label{class_processor_ab2e3c6a6006d226119d527d48a0dc2cb}} 
+string \mbox{\hyperlink{class_processor_ab2e3c6a6006d226119d527d48a0dc2cb}{extract\+Text}} (const string \&text, int \&index)
+\begin{DoxyCompactList}\small\item\em function which returns string -\/ text in the opening tag \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_processor_a72198018115aa41e7acf8a5dfc2c42dd}\label{class_processor_a72198018115aa41e7acf8a5dfc2c42dd}} 
+string \mbox{\hyperlink{class_processor_a72198018115aa41e7acf8a5dfc2c42dd}{extract\+Attribute}} (const string \&text, int \&index)
+\begin{DoxyCompactList}\small\item\em function which returns string -\/ attribute in the opening tag \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_processor_a10550960289e5f1eddf5522320e40201}\label{class_processor_a10550960289e5f1eddf5522320e40201}} 
+int \mbox{\hyperlink{class_processor_a10550960289e5f1eddf5522320e40201}{is\+Opening\+Tag\+Is\+Closing\+Or\+\_\+}} (const string \&text, int \&from)
+\begin{DoxyCompactList}\small\item\em returns 0 for opening, 1 for closing \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_processor_a1abbd6d2ea6a00d6bef254ae14e3bdbf}\label{class_processor_a1abbd6d2ea6a00d6bef254ae14e3bdbf}} 
+void {\bfseries process\+Opening\+Tag} (const string \&text, int \&index, \mbox{\hyperlink{class_element}{Element}} \&element)
+\item 
+\mbox{\Hypertarget{class_processor_a9f9ca6d3d53ac25c71b65bc98bc387af}\label{class_processor_a9f9ca6d3d53ac25c71b65bc98bc387af}} 
+void {\bfseries process\+Closing\+Tag} (const string \&text, int \&index, const \mbox{\hyperlink{class_element}{Element}} \&element)
+\item 
+\mbox{\Hypertarget{class_processor_a18ae8e5930b01c83b16bf108cad2b6bb}\label{class_processor_a18ae8e5930b01c83b16bf108cad2b6bb}} 
+void {\bfseries parse\+XML} ()
+\item 
+\mbox{\Hypertarget{class_processor_a6770414ad2d1f5d145dbcec4c3976dfd}\label{class_processor_a6770414ad2d1f5d145dbcec4c3976dfd}} 
+void {\bfseries parse\+Children\+For\+Tag} (const string \&text, int \&index, \mbox{\hyperlink{class_element}{Element}} $\ast$current)
+\item 
+\mbox{\Hypertarget{class_processor_a3402cde3b061d45da75287b8f711bf45}\label{class_processor_a3402cde3b061d45da75287b8f711bf45}} 
+void {\bfseries set\+Text} (const string \&given\+Text)
+\item 
+\mbox{\Hypertarget{class_processor_a19b752bd3acbc221c52f4deae2a0f536}\label{class_processor_a19b752bd3acbc221c52f4deae2a0f536}} 
+\mbox{\hyperlink{class_element}{Element}} \& {\bfseries get\+Root} ()
+\item 
+\mbox{\Hypertarget{class_processor_a8a79f5e576f8061b6deeaaccbd4d2097}\label{class_processor_a8a79f5e576f8061b6deeaaccbd4d2097}} 
+const string \& {\bfseries get\+Text} ()
+\item 
+\mbox{\Hypertarget{class_processor_aaeeb14a095b75e9fe4f8bd859ebcb1c3}\label{class_processor_aaeeb14a095b75e9fe4f8bd859ebcb1c3}} 
+const int \& {\bfseries get\+Index} ()
+\item 
+\mbox{\Hypertarget{class_processor_ad323d33401e49609a7983fb253875257}\label{class_processor_ad323d33401e49609a7983fb253875257}} 
+string {\bfseries get\+Key\+Of\+Attribute} (const string \&given\+Attribute, \mbox{\hyperlink{class_element}{Element}} \&elem)
+\item 
+\mbox{\Hypertarget{class_processor_a15a93d05d31d247164970a107ade00f3}\label{class_processor_a15a93d05d31d247164970a107ade00f3}} 
+string {\bfseries get\+Value\+Of\+Key} (const string \&given\+Attribute, \mbox{\hyperlink{class_element}{Element}} \&elem)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_processor_a03a0996259732701c1d2f3c8d73dd07d}\label{class_processor_a03a0996259732701c1d2f3c8d73dd07d}} 
+static bool \mbox{\hyperlink{class_processor_a03a0996259732701c1d2f3c8d73dd07d}{is\+Letter}} (char)
+\begin{DoxyCompactList}\small\item\em function which checks if a character is letter \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+class which manage validation, extraction and processing of the elements and so on 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+processor\+\_\+\+XML.\+h\item 
+processor\+\_\+\+XML.\+cpp\end{DoxyCompactItemize}

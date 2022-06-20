@@ -1,0 +1,111 @@
+\hypertarget{class_commands}{}\doxysection{Commands Class Reference}
+\label{class_commands}\index{Commands@{Commands}}
+
+
+{\ttfamily \#include $<$commands.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_commands_a861e9ba619ea3c57be07656aaac5df87}\label{class_commands_a861e9ba619ea3c57be07656aaac5df87}} 
+\mbox{\hyperlink{class_commands}{Commands}} \& \mbox{\hyperlink{class_commands_a861e9ba619ea3c57be07656aaac5df87}{operator=}} (const \mbox{\hyperlink{class_commands}{Commands}} \&e)=delete
+\begin{DoxyCompactList}\small\item\em deleted operator= \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_ab5a19d4faab753a9449083563c1af4d7}\label{class_commands_ab5a19d4faab753a9449083563c1af4d7}} 
+\mbox{\hyperlink{class_commands_ab5a19d4faab753a9449083563c1af4d7}{Commands}} (const \mbox{\hyperlink{class_commands}{Commands}} \&e)=delete
+\begin{DoxyCompactList}\small\item\em deleted copy constr \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_ab37f6924c4c559f351dfc50ed83b2624}\label{class_commands_ab37f6924c4c559f351dfc50ed83b2624}} 
+\mbox{\hyperlink{class_element}{Element}} \& \mbox{\hyperlink{class_commands_ab37f6924c4c559f351dfc50ed83b2624}{open}} (const string \&path)
+\begin{DoxyCompactList}\small\item\em returns reference to the extracted root of XML elem \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_a4a6c32dd685795d57bbde14b4e1d76e9}\label{class_commands_a4a6c32dd685795d57bbde14b4e1d76e9}} 
+void \mbox{\hyperlink{class_commands_a4a6c32dd685795d57bbde14b4e1d76e9}{close}} ()
+\begin{DoxyCompactList}\small\item\em closing the file \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_a2acf83b6cb295cadf9ccd727990a0b27}\label{class_commands_a2acf83b6cb295cadf9ccd727990a0b27}} 
+void {\bfseries save} ()
+\item 
+\mbox{\Hypertarget{class_commands_a27e4b4ff19a96ddac439329c87b93b5b}\label{class_commands_a27e4b4ff19a96ddac439329c87b93b5b}} 
+void \mbox{\hyperlink{class_commands_a27e4b4ff19a96ddac439329c87b93b5b}{save\+As}} (const string \&path)
+\begin{DoxyCompactList}\small\item\em the command requires a path -\/ where to be saved the file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_commands_acd88bd0f5b1fce14bd2f1431f91a1d0a}{print}} ()
+\begin{DoxyCompactList}\small\item\em function help -\/ prints the basic menu \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_commands_a7a15b8c5e9ae0330b2fc9fc298a4be58}{select1}} (const string \&id, const string \&key)
+\item 
+\mbox{\Hypertarget{class_commands_a46d055e571b3327d4cc66d5464ff5f8e}\label{class_commands_a46d055e571b3327d4cc66d5464ff5f8e}} 
+void \mbox{\hyperlink{class_commands_a46d055e571b3327d4cc66d5464ff5f8e}{set}} (const string \&id, const string \&key, const string \&value)
+\begin{DoxyCompactList}\small\item\em sets value of attribute \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_ac40d3a92d3c79d33f7394f586789d140}\label{class_commands_ac40d3a92d3c79d33f7394f586789d140}} 
+void \mbox{\hyperlink{class_commands_ac40d3a92d3c79d33f7394f586789d140}{children}} (const string \&id)
+\begin{DoxyCompactList}\small\item\em prints all nested elements of the given element \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_ac832a7d4353aa5c5eb18b610f26dec7d}\label{class_commands_ac832a7d4353aa5c5eb18b610f26dec7d}} 
+void \mbox{\hyperlink{class_commands_ac832a7d4353aa5c5eb18b610f26dec7d}{child}} (const string \&id, int index)
+\begin{DoxyCompactList}\small\item\em prints the n\textquotesingle{}th child of the element \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_adc6673af624354cc48ba53e78e0a0c9a}\label{class_commands_adc6673af624354cc48ba53e78e0a0c9a}} 
+void \mbox{\hyperlink{class_commands_adc6673af624354cc48ba53e78e0a0c9a}{text}} (const string \&id)
+\begin{DoxyCompactList}\small\item\em prints the text of the element \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_ae40d5ba2fb486a31c29fcc16497f168f}\label{class_commands_ae40d5ba2fb486a31c29fcc16497f168f}} 
+void \mbox{\hyperlink{class_commands_ae40d5ba2fb486a31c29fcc16497f168f}{delete\+Attribute}} (const string \&id, const string \&given\+Key)
+\begin{DoxyCompactList}\small\item\em deletes an attribute of element by given key \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_ab6a659c55458959ffe53ecbac1d840b6}\label{class_commands_ab6a659c55458959ffe53ecbac1d840b6}} 
+void \mbox{\hyperlink{class_commands_ab6a659c55458959ffe53ecbac1d840b6}{newchild}} (const string \&id)
+\begin{DoxyCompactList}\small\item\em adds a new child to \mbox{\hyperlink{class_element}{Element}}, which has only ID, nothing else \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_commands_a0d5252674715bb27c9875ea67f22d82e}{xpath}} (const string \&id, const string \&XPath)
+\item 
+void \mbox{\hyperlink{class_commands_abb4b251e1e2d325b24d09e3a4f051ec4}{extract\+Elements}} (\mbox{\hyperlink{class_element}{Element}} \&elem)
+\item 
+\mbox{\Hypertarget{class_commands_aee15b85fa27e3c2f8678a1f90da0bd82}\label{class_commands_aee15b85fa27e3c2f8678a1f90da0bd82}} 
+void \mbox{\hyperlink{class_commands_aee15b85fa27e3c2f8678a1f90da0bd82}{set\+Processor}} (const \mbox{\hyperlink{class_processor}{Processor}} \&given\+Pr)
+\begin{DoxyCompactList}\small\item\em function for setting a processor \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_commands_a04af9d2894e8c0b6825aab6e2bb31bf2}\label{class_commands_a04af9d2894e8c0b6825aab6e2bb31bf2}} 
+static \mbox{\hyperlink{class_commands}{Commands}} \& \mbox{\hyperlink{class_commands_a04af9d2894e8c0b6825aab6e2bb31bf2}{get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em function for getting an instance \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_commands_a45f0d51e1c7706473f3224fd7c153e00}\label{class_commands_a45f0d51e1c7706473f3224fd7c153e00}} 
+static bool \mbox{\hyperlink{class_commands_a45f0d51e1c7706473f3224fd7c153e00}{check\+If\+Path\+Is\+Valid}} (string path)
+\begin{DoxyCompactList}\small\item\em helper function used to check if a path to given file is valid \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_commands_a2075d0d2579ba89d80c825e445a8797a}\label{class_commands_a2075d0d2579ba89d80c825e445a8797a}} 
+vector$<$ \mbox{\hyperlink{class_element}{Element}} $\ast$ $>$ {\bfseries extracted\+Elements}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class where all of the functionality with the commands is made Singleton class 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_commands_abb4b251e1e2d325b24d09e3a4f051ec4}\label{class_commands_abb4b251e1e2d325b24d09e3a4f051ec4}} 
+\index{Commands@{Commands}!extractElements@{extractElements}}
+\index{extractElements@{extractElements}!Commands@{Commands}}
+\doxysubsubsection{\texorpdfstring{extractElements()}{extractElements()}}
+{\footnotesize\ttfamily void Commands\+::extract\+Elements (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_element}{Element}} \&}]{elem }\end{DoxyParamCaption})}
+
+other functions function used for extracting all of the elements and storing them in a vector \mbox{\Hypertarget{class_commands_acd88bd0f5b1fce14bd2f1431f91a1d0a}\label{class_commands_acd88bd0f5b1fce14bd2f1431f91a1d0a}} 
+\index{Commands@{Commands}!print@{print}}
+\index{print@{print}!Commands@{Commands}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void Commands\+::print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+function help -\/ prints the basic menu 
+
+prints the read info from the XML file and prints the output in formated version \mbox{\Hypertarget{class_commands_a7a15b8c5e9ae0330b2fc9fc298a4be58}\label{class_commands_a7a15b8c5e9ae0330b2fc9fc298a4be58}} 
+\index{Commands@{Commands}!select1@{select1}}
+\index{select1@{select1}!Commands@{Commands}}
+\doxysubsubsection{\texorpdfstring{select1()}{select1()}}
+{\footnotesize\ttfamily void Commands\+::select1 (\begin{DoxyParamCaption}\item[{const string \&}]{id,  }\item[{const string \&}]{key }\end{DoxyParamCaption})}
+
+prints a value of attribute by given ID of element and key of attribute Извежда стойност на атрибут по даден идентификатор на елемента и ключ на атрибута \mbox{\Hypertarget{class_commands_a0d5252674715bb27c9875ea67f22d82e}\label{class_commands_a0d5252674715bb27c9875ea67f22d82e}} 
+\index{Commands@{Commands}!xpath@{xpath}}
+\index{xpath@{xpath}!Commands@{Commands}}
+\doxysubsubsection{\texorpdfstring{xpath()}{xpath()}}
+{\footnotesize\ttfamily void Commands\+::xpath (\begin{DoxyParamCaption}\item[{const string \&}]{id,  }\item[{const string \&}]{XPath }\end{DoxyParamCaption})}
+
+операции за изпълнение на прости XPath 2.\+0 заявки към даден елемент, която връща списък от XML елементи returns a list of simple XPath 2.\+0 operations for given elemnts(menu) in the given list(menu) -\/ you have some options and commands for the chosen element 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+commands.\+h\item 
+commands.\+cpp\end{DoxyCompactItemize}

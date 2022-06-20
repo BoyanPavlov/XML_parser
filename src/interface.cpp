@@ -40,45 +40,45 @@ int Interface::openChosen()
          //  << "CLOSE:  to close the program enter: "
          //  << listOfCommands[e_CLOSE] << endl
 
-         << "SAVE:   to save current changes in file enter: "
+         << e_SAVE << ".SAVE:   to save current changes in file enter: "
          << listOfCommands[e_SAVE] << endl
 
-         << "SAVE AS:  to save the XML in a new file with chosen name by you, enter: "
+         << e_SAVE_AS << ".SAVE AS:  to save the XML in a new file with chosen name by you, enter: "
          << listOfCommands[e_SAVE_AS] << endl
 
-         << "HELP: to Print the current options enter: "
+         << e_HELP << ".HELP: to Print the current options enter: "
          << listOfCommands[e_HELP] << endl
 
-         << "EXIT:   to exit the program enter: "
+         << e_EXIT << ".EXIT:   to exit the program enter: "
          << listOfCommands[e_EXIT] << endl
 
          //=============================
 
-         << "PRINT:  to print XML enter: "
+         << e_PRINT << ".PRINT:  to print XML enter: "
          << listOfCommands[e_PRINT] << endl
 
-         << "SELECT: to prints a value of attribute by given ID of element\n and key of attribute in XML enter: "
+         << e_SELECT << ".SELECT: to prints a value of attribute by given ID of element\n and key of attribute in XML enter: "
          << listOfCommands[e_SELECT] << endl
 
-         << "SET:   to set value of attribute enter: "
+         << e_SET << ".SET:   to set value of attribute enter: "
          << listOfCommands[e_SET] << endl
 
-         << "CHILDREN:   to get the vector of all nested elements of the given element enter: "
+         << e_CHILDREN << ".CHILDREN:   to get the vector of all nested elements of the given element enter: "
          << listOfCommands[e_CHILDREN] << endl
 
-         << "CHILD:   to get the the n'th child of the element enter: "
+         << e_CHILD << ".CHILD:   to get the the n'th child of the element enter: "
          << listOfCommands[e_CHILD] << endl
 
-         << "TEXT:   to get the text of the element of given element enter: "
+         << e_TEXT << ".TEXT:   to get the text of the element of given element enter: "
          << listOfCommands[e_TEXT] << endl
 
-         << "DELETE_ATTRIBUTE:   to delete an attribute of element by given key enter: "
+         << e_DELETE_ATTRIBUTE << ".DELETE_ATTRIBUTE:   to delete an attribute of element by given key enter: "
          << listOfCommands[e_DELETE_ATTRIBUTE] << endl
 
-         << "NEW_CHILD:   to adds a new child to element by given ID enter: "
+         << e_NEWCHILD << ".NEW_CHILD:   to adds a new child to element by given ID enter: "
          << listOfCommands[e_NEWCHILD] << endl
 
-         << "xPATH:   to return a list of simple XPath 2.0 operations for given elements(menu) enter: "
+         << e_XPATH << ".xPATH:   to return a list of simple XPath 2.0 operations for given elements(menu) enter: "
          << listOfCommands[e_XPATH] << endl;
     cout << line;
 
@@ -88,7 +88,7 @@ int Interface::openChosen()
            choice != e_HELP && choice != e_EXIT && choice != e_PRINT &&
            choice != e_SET && choice != e_SELECT && choice != e_CHILDREN &&
            choice != e_CHILD && choice != e_TEXT && choice != e_DELETE_ATTRIBUTE &&
-           e_NEWCHILD && e_XPATH)
+           choice != e_NEWCHILD && choice != e_XPATH)
     {
         cout << "Invalid input, try again\n";
         cin >> choice;
@@ -144,6 +144,10 @@ void Interface::start()
         {
             choice = entrance();
             alreadyEntered = true;
+            if (choice == e_EXIT)
+            {
+                instance.close();
+            }
         }
 
         if (choice == e_OPEN)
@@ -152,7 +156,7 @@ void Interface::start()
             cin >> path;
             try
             {
-                instance.open(path);
+                instance.extractElements(instance.open(path));
                 cout << endl;
                 currentchoice = openChosen();
                 choice = currentchoice;
@@ -252,6 +256,7 @@ void Interface::start()
             cout << "Please enter name of Element(ID) and its attibute name (key) \n";
             cin >> id >> key;
             instance.deleteAttribute(id, key);
+            isFileSaved = false;
 
             cout << "\n";
             choice = openChosen();
@@ -265,6 +270,7 @@ void Interface::start()
             instance.newchild(id);
             cout << "Element with id:" << id << "added succesfully\n";
 
+            isFileSaved = false;
             cout << "\n";
             choice = openChosen();
         }
@@ -281,7 +287,9 @@ void Interface::start()
             string xPath;
             cout << "Please enter ID, then expression as xPath";
             cin >> id >> xPath;
-            instance.xpath(id, xPath);
+            // instance.xpath(id, xPath);
+            cout << "Sorry currently we have a problem with XPath\n";
+
             cout << '\n';
             choice = openChosen();
         }
@@ -294,7 +302,7 @@ void Interface::start()
         if (choice == e_SAVE)
         {
             instance.save();
-            isFileSaved == true;
+            isFileSaved = true;
 
             cout << "\n";
             choice = openChosen();
@@ -303,14 +311,9 @@ void Interface::start()
         if (choice == e_SAVE_AS)
         {
             cout << "Please enter path or name of the new file\n";
-            do
-            {
+           
                 cin >> path;
-                if (!Commands::checkIfPathIsValid(path))
-                {
-                    cout << "Please enter VALID path or name of the new file\n";
-                }
-            } while (!Commands::checkIfPathIsValid(path));
+          
             instance.saveAs(path);
             isFileSaved = true;
 
@@ -332,19 +335,11 @@ void Interface::start()
             cin >> currentchoice;
             if (currentchoice == e_SAVE)
             {
-                instance.save();
-                isFileSaved = true;
-
-                cout << "\n";
-                choice = openChosen();
+                choice = e_SAVE;
             }
             else if (currentchoice == e_SAVE_AS)
             {
-                instance.saveAs(path);
-                isFileSaved = true;
-
-                cout << "\n";
-                choice = openChosen();
+                choice = e_SAVE_AS;
             }
             else
             {
