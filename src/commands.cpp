@@ -246,6 +246,7 @@ void Commands::newchild(const string &id)
     newOne.setNameOfElement(id);
     newOne.setLevel(1);
     instance.getRoot().addElement(newOne);
+    // problem here
     extractedElements.push_back(&newOne);
 }
 
